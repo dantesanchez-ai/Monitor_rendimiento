@@ -4,13 +4,30 @@ from datetime import datetime
 
 HISTORY_FILE = "monitor_history.json"
 
+_last_metrics = None
+
+USAGE_MIN = 5
+USAGE_MAX = 100
+TEMP_MIN = 32
+TEMP_MAX = 72
+
+
 def generate_metrics():
     """Generate simulated CPU and GPU usage and temperature metrics."""
-    cpu_usage = random.randint(5, 98)
-    gpu_usage = random.randint(3, 96)
-    cpu_temp = _temperature_from_usage(cpu_usage, 35, 80)
-    gpu_temp = _temperature_from_usage(gpu_usage, 30, 78)
-    return {
+    global _last_metrics
+
+    if _last_metrics is None:
+        cpu_usage = random.randint(USAGE_MIN, USAGE_MAX)
+        gpu_usage = random.randint(USAGE_MIN, USAGE_MAX)
+        cpu_temp = random.randint(TEMP_MIN, TEMP_MAX)
+        gpu_temp = random.randint(TEMP_MIN, TEMP_MAX)
+    else:
+        cpu_usage = _fluctuate_value(_last_metrics["cpu_usage"], USAGE_MIN, USAGE_MAX, 0.15)
+        gpu_usage = _fluctuate_value(_last_metrics["gpu_usage"], USAGE_MIN, USAGE_MAX, 0.15)
+        cpu_temp = _temperature_from_usage(cpu_usage, _last_metrics["cpu_temp"])
+        gpu_temp = _temperature_from_usage(gpu_usage, _last_metrics["gpu_temp"])
+
+    metrics = {
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "cpu_usage": cpu_usage,
         "gpu_usage": gpu_usage,
@@ -18,11 +35,26 @@ def generate_metrics():
         "gpu_temp": gpu_temp,
     }
 
+    _last_metrics = metrics
+    return metrics
 
-def _temperature_from_usage(usage, base, max_temp):
-    """Convert usage into a simulated temperature value."""
-    noise = random.uniform(-2.5, 2.5)
-    return int(min(max_temp, max(base, base + usage * 0.45 + noise)))
+
+def _fluctuate_value(value, minimum, maximum, max_percent_change):
+    """Fluctuate a value by up to a percentage of its current amount."""
+    change = value * random.uniform(-max_percent_change, max_percent_change)
+    return int(min(maximum, max(minimum, value + change)))
+
+
+def _temperature_from_usage(usage, last_temp):
+    """Return a new temperature that follows usage, with limited fluctuation."""
+    target_temp = TEMP_MIN + (usage / 100) * (TEMP_MAX - TEMP_MIN)
+    percent_change = random.choice([0.10, 0.15])
+    max_delta = last_temp * percent_change
+    delta = target_temp - last_temp
+    if abs(delta) > max_delta:
+        delta = max_delta if delta > 0 else -max_delta
+    temp = last_temp + delta + random.uniform(-1.5, 1.5)
+    return int(min(TEMP_MAX, max(TEMP_MIN, temp)))
 
 
 def save_reading(reading, filename=HISTORY_FILE):
