@@ -1,0 +1,37 @@
+[
+  {
+    "fecha_hora": "2026-05-16 16:11:38",
+    "uso_cpu": 34,
+    "uso_gpu": 66,
+    "temp_cpu": 40,
+    "temp_gpu": 43
+  },
+  {
+    "fecha_hora": "2026-05-16 16:11:42",
+    "uso_cpu": 85,
+    "uso_gpu": 61,
+    "temp_cpu": 69,
+    "temp_gpu": 44
+  },
+  {
+    "fecha_hora": "2026-05-16 16:13:33",
+    "uso_cpu": 12,
+    "uso_gpu": 89,
+    "temp_cpu": 37,
+    "temp_gpu": 68
+  },
+  {
+    "fecha_hora": "2026-05-16 16:14:56",
+    "uso_cpu": 41,
+    "uso_gpu": 32,
+    "temp_cpu": 48,
+    "temp_gpu": 45
+  },
+  {
+    "fecha_hora": "2026-05-17 13:16:58",
+    "uso_cpu": 52,
+    "uso_gpu": 14,
+    "temp_cpu": 52,
+    "temp_gpu": 38
+  }
+]
