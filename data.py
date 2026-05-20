@@ -69,7 +69,7 @@ def guardar_lectura(lectura, nombre_archivo=RUTA_HISTORIAL):
 
     historial.append(lectura)
     with open(nombre_archivo, "w", encoding="utf-8") as f:
-        json.dump(historial, f, indent=2, ensure_ascii=False)
+        json.dump(historial, f, indent=2, ensure_ascii=False) #Dump sobreescribe el archivo con la versión actualizada.
 
 
 def cargar_historial(nombre_archivo=RUTA_HISTORIAL):

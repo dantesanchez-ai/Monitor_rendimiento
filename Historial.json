@@ -33,5 +33,19 @@
     "uso_gpu": 14,
     "temp_cpu": 52,
     "temp_gpu": 38
+  },
+  {
+    "fecha_hora": "2026-05-18 08:21:24",
+    "uso_cpu": 96,
+    "uso_gpu": 23,
+    "temp_cpu": 70,
+    "temp_gpu": 40
+  },
+  {
+    "fecha_hora": "2026-05-19 22:21:01",
+    "uso_cpu": 5,
+    "uso_gpu": 5,
+    "temp_cpu": 35,
+    "temp_gpu": 32
   }
 ]

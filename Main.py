@@ -9,7 +9,7 @@ class MonitorRendimiento:
         self.raiz = raiz
         self.raiz.title("Monitor Simulado de Rendimiento")
         self.raiz.geometry("520x380")
-        self.raiz.resizable(False, False)
+        self.raiz.resizable(False, False) #Evita que se pueda redimensionar la ventana.
 
         self.vista_actual = 0
         self.vistas = [self.construir_vista_rendimiento, self.construir_vista_temperatura]
@@ -18,12 +18,12 @@ class MonitorRendimiento:
 
         self.crear_widgets()
         self.mostrar_vista(0)
-        self.raiz.after(1200, self.actualizar_metricas)
+        self.raiz.after(1200, self.actualizar_metricas) #Programa la actualización de métricas cada 1200 ms.
         self.asignar_atajos()
 
     def crear_widgets(self):
         self.encabezado = tk.Label(self.raiz, text="Monitor de Rendimiento", font=("Segoe UI", 18, "bold"))
-        self.encabezado.pack(pady=(10, 4))
+        self.encabezado.pack(pady=(10, 4)) #Pack agrega espaciado entre widgets.
 
         self.subtitulo = tk.Label(self.raiz, text="Pantalla 1: Uso de CPU y GPU", font=("Segoe UI", 11))
         self.subtitulo.pack(pady=(0, 10))
@@ -50,7 +50,7 @@ class MonitorRendimiento:
         self.botones.append(boton)
 
     def asignar_atajos(self):
-        self.raiz.bind("<Left>", lambda evento: self.mostrar_vista(0))
+        self.raiz.bind("<Left>", lambda evento: self.mostrar_vista(0)) #bind asigna funciones a teclas específicas.
         self.raiz.bind("<Right>", lambda evento: self.mostrar_vista(1))
         self.raiz.bind("1", lambda evento: self.mostrar_vista(0))
         self.raiz.bind("2", lambda evento: self.mostrar_vista(1))
@@ -88,7 +88,7 @@ class MonitorRendimiento:
         self.etiqueta_temperatura.pack(anchor="w")
 
         self.marco_temperatura = tk.Frame(self.marco_contenido)
-        self.marco_temperatura.pack(fill="x", pady=(6, 0))
+        self.marco_temperatura.pack(fill="x", pady=(6, 0)) #Pack con fill="x" hace que el marco ocupe todo el ancho disponible.
 
         self.etiqueta_temp_cpu = tk.Label(self.marco_temperatura, text="CPU: -- °C", font=("Segoe UI", 12))
         self.etiqueta_temp_cpu.grid(row=0, column=0, sticky="w", padx=(0, 6), pady=4)
@@ -138,7 +138,7 @@ class MonitorRendimiento:
 
     def dibujar_barra_uso(self, canvas, uso, etiqueta):
         canvas.delete("uso")
-        ancho_relleno = int(496 * uso / 100)
+        ancho_relleno = int(496 * uso / 100) #Convierte el porcentaje de uso a un ancho en píxeles.
         color = self.color_por_uso(uso)
         canvas.create_rectangle(4, 10, 4 + ancho_relleno, 26, fill=color, outline="", tags=("uso",))
         canvas.create_text(260, 18, text=f"{etiqueta} {uso}%", fill="#ffffff", font=("Segoe UI", 10, "bold"), tags=("uso",))
@@ -182,7 +182,7 @@ class MonitorRendimiento:
         self.tema = "claro" if self.tema == "oscuro" else "oscuro"
         self.aplicar_tema()
 
-    def aplicar_tema(self):
+    def aplicar_tema(self): #Operador ternario para asignar colores según el tema actual.
         fondo = "#121212" if self.tema == "oscuro" else "#f2f2f2"
         texto = "#ffffff" if self.tema == "oscuro" else "#1a1a1a"
         panel_fondo = "#1f1f1f" if self.tema == "oscuro" else "#ffffff"
